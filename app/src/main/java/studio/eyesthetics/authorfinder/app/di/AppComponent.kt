@@ -8,6 +8,8 @@ import studio.eyesthetics.authorfinder.app.App
 import studio.eyesthetics.authorfinder.app.di.modules.AppModule
 import studio.eyesthetics.authorfinder.app.di.modules.NetworkModule
 import studio.eyesthetics.authorfinder.app.di.modules.RepositoryModule
+import studio.eyesthetics.authorfinder.ui.author.AuthorFragment
+import studio.eyesthetics.authorfinder.ui.authors.AuthorsFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -35,4 +37,6 @@ interface AppComponent {
 
     //activity, fragment
     fun inject(activity: MainActivity)
+    fun inject(fragment: AuthorsFragment)
+    fun inject(fragment: AuthorFragment)
 }

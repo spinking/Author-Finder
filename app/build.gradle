@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
 apply from: "../versions.gradle"
 
@@ -30,6 +31,9 @@ android {
             debuggable true
             buildConfigField "String", BASE_URL, '"https://reststop.randomhouse.com/"'
         }
+    }
+    androidExtensions {
+        experimental = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -86,5 +90,4 @@ dependencies {
 
     //Kotlin coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/authorsFragment">
+
+    <fragment
+        android:id="@+id/authorsFragment"
+        android:name="studio.eyesthetics.authorfinder.ui.authors.AuthorsFragment"
+        android:label="AuthorsFragment" >
+        <action
+            android:id="@+id/action_authorsFragment_to_authorFragment"
+            app:destination="@id/authorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authorFragment"
+        android:name="studio.eyesthetics.authorfinder.ui.author.AuthorFragment"
+        android:label="AuthorFragment" />
+</navigation>
