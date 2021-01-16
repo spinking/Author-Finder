@@ -14,6 +14,8 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
     protected abstract val layout: Int
     lateinit var navController: NavController
 
+    val toolbarBuilder = ToolbarBuilder()
+
     abstract fun subscribeOnState(state: IViewModelState)
 
     abstract fun renderNotification(notify: Notify)
@@ -21,6 +23,7 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout)
+        setSupportActionBar(toolbar)
         viewModel.observeState(this) { subscribeOnState(it) }
         viewModel.observeNotifications(this) { renderNotification(it) }
         viewModel.observeNavigation(this) { subscribeOnNavigation(it) }

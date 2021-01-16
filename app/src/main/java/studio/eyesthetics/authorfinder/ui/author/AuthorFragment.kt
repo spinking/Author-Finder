@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import studio.eyesthetics.authorfinder.R
 import studio.eyesthetics.authorfinder.app.App
 import studio.eyesthetics.authorfinder.ui.base.BaseFragment
+import studio.eyesthetics.authorfinder.ui.base.ToolbarBuilder
 import studio.eyesthetics.authorfinder.viewmodels.AuthorViewModel
 import studio.eyesthetics.authorfinder.viewmodels.AuthorViewModelFactory
 import studio.eyesthetics.authorfinder.viewmodels.base.SavedStateViewModelFactory
@@ -23,7 +24,11 @@ class AuthorFragment : BaseFragment<AuthorViewModel>() {
         SavedStateViewModelFactory(authorViewModelFactory, this)
     }
 
-    override fun setupViews() {
+    override val prepareToolbar: (ToolbarBuilder.() -> Unit)? = {
+        this.setTitle(getString(R.string.author_label))
+    }
 
+    override fun setupViews() {
+        main.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }

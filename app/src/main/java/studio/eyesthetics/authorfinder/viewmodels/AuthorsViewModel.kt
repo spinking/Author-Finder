@@ -10,6 +10,18 @@ class AuthorsViewModel(
     handle: SavedStateHandle
 ) : BaseViewModel<AuthorsState>(handle, AuthorsState()) {
 
+    fun handleSearch(query: String?) {
+        query ?: return
+        updateState {
+            it.copy(searchQuery = query)
+        }
+    }
+
+    fun handleSearchMode(isSearch: Boolean) {
+        updateState {
+            it.copy(isSearch = isSearch)
+        }
+    }
 }
 
 class AuthorsViewModelFactory @Inject constructor(
@@ -20,4 +32,19 @@ class AuthorsViewModelFactory @Inject constructor(
     }
 }
 
-class AuthorsState : IViewModelState
+data class AuthorsState(
+    val isSearch: Boolean = false,
+    val searchQuery: String? = null
+) : IViewModelState {
+    override fun save(outState: SavedStateHandle) {
+        outState.set(::isSearch.name, isSearch)
+        outState.set(::searchQuery.name, searchQuery)
+    }
+
+    override fun restore(savedState: SavedStateHandle): IViewModelState {
+        return this.copy(
+            isSearch = savedState.get<Boolean>(::isSearch.name) ?: false,
+            searchQuery = savedState.get<String>(::searchQuery.name)
+        )
+    }
+}

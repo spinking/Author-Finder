@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Author Finder</string>
+
+    <!--Dialog-->
     <string name="dialog_positive_button">OK</string>
+
+    <!--AuthorsFragment-->
+    <string name="authors_search_title">Search</string>
+
+    <!--AuthorFramgent-->
+    <string name="author_label">Author</string>
 </resources>
