@@ -4,13 +4,13 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_authors.*
 import kotlinx.android.synthetic.main.search_view_layout.view.*
 import studio.eyesthetics.authorfinder.R
 import studio.eyesthetics.authorfinder.app.App
-import studio.eyesthetics.authorfinder.ui.base.BaseFragment
-import studio.eyesthetics.authorfinder.ui.base.Binding
-import studio.eyesthetics.authorfinder.ui.base.MenuItemHolder
-import studio.eyesthetics.authorfinder.ui.base.ToolbarBuilder
+import studio.eyesthetics.authorfinder.data.models.Author
+import studio.eyesthetics.authorfinder.ui.base.*
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsState
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsViewModel
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsViewModelFactory
@@ -44,6 +44,8 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
                 )
             )
     }
+
+    private val authorAdapter by lazy { DelegationAdapter<Author>() }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
@@ -86,10 +88,26 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
 
     override fun setupViews() {
         setHasOptionsMenu(true)
+        viewModel.observeAuthors(viewLifecycleOwner) {
+            authorAdapter.items = it
+        }
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        authorAdapter.delegatesManager.addDelegate(AuthorDelegate {
+            //TODO transition to single author
+        })
+
+        rv_authors.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = authorAdapter
+        }
     }
 
     override fun onDestroyView() {
         toolbar.search_view?.setOnQueryTextListener(null)
+        rv_authors.adapter = null
         super.onDestroyView()
     }
 

@@ -6,6 +6,7 @@ import dagger.Component
 import studio.eyesthetics.authorfinder.MainActivity
 import studio.eyesthetics.authorfinder.app.App
 import studio.eyesthetics.authorfinder.app.di.modules.AppModule
+import studio.eyesthetics.authorfinder.app.di.modules.MapperModule
 import studio.eyesthetics.authorfinder.app.di.modules.NetworkModule
 import studio.eyesthetics.authorfinder.app.di.modules.RepositoryModule
 import studio.eyesthetics.authorfinder.ui.author.AuthorFragment
@@ -17,6 +18,7 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         NetworkModule::class,
+        MapperModule::class,
         RepositoryModule::class
     ]
 )

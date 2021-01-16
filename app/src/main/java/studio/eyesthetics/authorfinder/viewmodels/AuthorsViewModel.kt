@@ -1,20 +1,41 @@
 package studio.eyesthetics.authorfinder.viewmodels
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
+import studio.eyesthetics.authorfinder.data.models.Author
+import studio.eyesthetics.authorfinder.data.repositories.IAuthorRepository
 import studio.eyesthetics.authorfinder.viewmodels.base.BaseViewModel
 import studio.eyesthetics.authorfinder.viewmodels.base.IViewModelFactory
 import studio.eyesthetics.authorfinder.viewmodels.base.IViewModelState
 import javax.inject.Inject
 
 class AuthorsViewModel(
-    handle: SavedStateHandle
+    handle: SavedStateHandle,
+    private val authorRepository: IAuthorRepository
 ) : BaseViewModel<AuthorsState>(handle, AuthorsState()) {
+
+    private val authors = MutableLiveData<List<Author>>()
+
+    fun observeAuthors(owner: LifecycleOwner, onChange: (List<Author>) -> Unit) {
+        authors.observe(owner, Observer { onChange(it) })
+    }
+
+    private fun getAuthors(query: String) {
+        launchSafety {
+            val response = authorRepository.getAuthors(query)
+            authors.value = response
+        }
+    }
 
     fun handleSearch(query: String?) {
         query ?: return
         updateState {
             it.copy(searchQuery = query)
         }
+        if (query.isNotEmpty())
+            getAuthors(query)
     }
 
     fun handleSearchMode(isSearch: Boolean) {
@@ -25,10 +46,10 @@ class AuthorsViewModel(
 }
 
 class AuthorsViewModelFactory @Inject constructor(
-
+    private val authorRepository: IAuthorRepository
 ) : IViewModelFactory<AuthorsViewModel> {
     override fun create(handle: SavedStateHandle): AuthorsViewModel {
-        return AuthorsViewModel(handle)
+        return AuthorsViewModel(handle, authorRepository)
     }
 }
 

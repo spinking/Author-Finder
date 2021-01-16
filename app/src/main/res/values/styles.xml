@@ -18,4 +18,17 @@
         <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
     </style>
 
+    <style name="Text" parent="AppTheme">
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textColor">@color/colorDark</item>
+    </style>
+
+    <style name="Text.20">
+        <item name="android:textSize">@dimen/font_20</item>
+    </style>
+
+    <style name="Text.14">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
 </resources>
