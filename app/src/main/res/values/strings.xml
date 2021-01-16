@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Author Finder</string>
+    <string name="dialog_positive_button">OK</string>
 </resources>
