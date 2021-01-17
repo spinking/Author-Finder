@@ -10,6 +10,16 @@
         <item name="selectableItemBackgroundCollapsed">@color/colorPrimary</item>
         <item name="selectableItemBackgroundExpanded">@color/colorPrimary</item>
         <item name="autoCompleteTextViewStyle">@style/CursorColor</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorDark</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorDark</item>
     </style>
 
     <style name="CursorColor" parent="Widget.AppCompat.AutoCompleteTextView">
