@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,11 +14,13 @@ import kotlinx.android.synthetic.main.search_view_layout.view.*
 import studio.eyesthetics.authorfinder.R
 import studio.eyesthetics.authorfinder.app.App
 import studio.eyesthetics.authorfinder.data.models.AuthorItem
+import studio.eyesthetics.authorfinder.ui.author.AuthorFragment
 import studio.eyesthetics.authorfinder.ui.base.*
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsState
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsViewModel
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsViewModelFactory
 import studio.eyesthetics.authorfinder.viewmodels.base.IViewModelState
+import studio.eyesthetics.authorfinder.viewmodels.base.NavigationCommand
 import studio.eyesthetics.authorfinder.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -112,7 +115,8 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
 
         authorAdapter.delegatesManager.apply {
             addDelegate(AuthorDelegate {
-                //TODO transition to single author
+                val bundle = bundleOf(AuthorFragment.AUTHOR_ID to it)
+                viewModel.navigate(NavigationCommand.To(R.id.authorFragment, bundle))
             })
             addDelegate(EmptyDelegate())
         }

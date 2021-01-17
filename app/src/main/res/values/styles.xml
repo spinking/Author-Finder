@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorOnPrimary">@color/colorDark</item>
+        <item name="selectableItemBackgroundCollapsed">@color/colorPrimary</item>
+        <item name="selectableItemBackgroundExpanded">@color/colorPrimary</item>
     </style>
 
     <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
