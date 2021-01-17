@@ -3,6 +3,7 @@ package studio.eyesthetics.authorfinder.ui.base
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.activity_main.*
 import studio.eyesthetics.authorfinder.MainActivity
 import studio.eyesthetics.authorfinder.viewmodels.base.BaseViewModel
 import studio.eyesthetics.authorfinder.viewmodels.base.IViewModelState
@@ -15,6 +16,10 @@ abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment()
     open val binding: Binding? = null
     protected abstract val viewModel: T
     protected abstract val layout: Int
+
+    open val prepareToolbar: (ToolbarBuilder.() -> Unit)? = null
+    val toolbar
+        get() = main.toolbar
 
     abstract fun setupViews()
 
@@ -41,6 +46,15 @@ abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment()
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
 
+        main.toolbarBuilder
+            .invalidate()
+            .prepare(prepareToolbar)
+            .build(main)
+
+        toolbar.setNavigationOnClickListener {
+            main.navController.popBackStack()
+        }
+
         setupViews()
         binding?.rebind()
     }
@@ -49,6 +63,22 @@ abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment()
         viewModel.saveState()
         binding?.saveUi(outState)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        if(main.toolbarBuilder.items.isNotEmpty()) {
+            for((index, menuHolder) in main.toolbarBuilder.items.withIndex()) {
+                val item = menu.add(0, menuHolder.menuId, index, menuHolder.title)
+                item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS or MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW)
+                    .setOnMenuItemClickListener {
+                        menuHolder.clickListener?.invoke(it)?.let { true } ?: false
+                    }
+                if (menuHolder.icon != null)
+                    item.setIcon(menuHolder.icon)
+                if(menuHolder.actionViewLayout != null) item.setActionView(menuHolder.actionViewLayout)
+            }
+        } else menu.clear()
+        super.onPrepareOptionsMenu(menu)
     }
 
     open fun renderNotification(notify: Notify) {

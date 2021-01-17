@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Author Finder</string>
+
+    <!--Dialog-->
     <string name="dialog_positive_button">OK</string>
+
+    <!--AuthorsFragment-->
+    <string name="authors_search_title">Search</string>
+    <string name="authors_id">Author ID</string>
+    <string name="authors_name">Name</string>
+
+    <!--AuthorFramgent-->
+    <string name="author_label">Author</string>
+    <string name="authors_empty">По вашему запросу ничего не найдено</string>
 </resources>

@@ -3,8 +3,34 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/colorDark</item>
     </style>
+
+    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="android:textColorSecondary">?attr/colorOnPrimary</item>
+        <item name="android:background">?attr/colorAccent</item>
+    </style>
+
+    <style name="BarsTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Text" parent="AppTheme">
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textColor">@color/colorDark</item>
+    </style>
+
+    <style name="Text.20">
+        <item name="android:textSize">@dimen/font_20</item>
+    </style>
+
+    <style name="Text.14">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
 </resources>
