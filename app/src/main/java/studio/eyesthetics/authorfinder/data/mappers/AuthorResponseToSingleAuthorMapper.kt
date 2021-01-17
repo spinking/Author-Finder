@@ -9,7 +9,8 @@ class AuthorResponseToSingleAuthorMapper: Mapper<AuthorResponse, SingleAuthor> {
     override fun mapFromEntity(type: AuthorResponse): SingleAuthor {
         val items = mutableListOf<Description>()
         if (type.titles != null && type.titles.isbn.isNotEmpty()) {
-            items.add(Description("Titles", type.titles.isbn))
+            //Sometimes get too long array, need pagination or something
+            items.add(Description("Titles", type.titles.isbn.subList(0, 10)))
         }
         if (type.works != null && type.works.works.isNotEmpty()) {
             items.add(Description("Works", type.works.works.map { Work(it) }))
