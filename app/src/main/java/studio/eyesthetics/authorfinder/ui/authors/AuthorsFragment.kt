@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_authors.*
 import kotlinx.android.synthetic.main.search_view_layout.view.*
 import studio.eyesthetics.authorfinder.R
 import studio.eyesthetics.authorfinder.app.App
-import studio.eyesthetics.authorfinder.data.models.Author
+import studio.eyesthetics.authorfinder.data.models.AuthorItem
 import studio.eyesthetics.authorfinder.ui.base.*
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsState
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsViewModel
@@ -48,7 +48,7 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
             )
     }
 
-    private val authorAdapter by lazy { DelegationAdapter<Author>() }
+    private val authorAdapter by lazy { DelegationAdapter<AuthorItem>() }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
@@ -110,9 +110,12 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
         if (divider != null)
             decorator.setDrawable(divider)
 
-        authorAdapter.delegatesManager.addDelegate(AuthorDelegate {
-            //TODO transition to single author
-        })
+        authorAdapter.delegatesManager.apply {
+            addDelegate(AuthorDelegate {
+                //TODO transition to single author
+            })
+            addDelegate(EmptyDelegate())
+        }
 
         rv_authors.apply {
             layoutManager = LinearLayoutManager(requireContext())

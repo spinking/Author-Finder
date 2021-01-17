@@ -11,4 +11,5 @@
 
     <!--AuthorFramgent-->
     <string name="author_label">Author</string>
+    <string name="authors_empty">По вашему запросу ничего не найдено</string>
 </resources>

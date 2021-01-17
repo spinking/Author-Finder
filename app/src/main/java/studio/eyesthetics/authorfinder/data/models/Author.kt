@@ -5,4 +5,4 @@ data class Author(
     val authordisplay: String,
     val titles: List<Isbn>,
     val works: List<String>
-)
+) : AuthorItem

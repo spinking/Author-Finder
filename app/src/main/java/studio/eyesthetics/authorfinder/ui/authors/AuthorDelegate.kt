@@ -4,19 +4,22 @@ import android.view.View
 import kotlinx.android.synthetic.main.item_author.*
 import studio.eyesthetics.authorfinder.R
 import studio.eyesthetics.authorfinder.data.models.Author
+import studio.eyesthetics.authorfinder.data.models.AuthorItem
 import studio.eyesthetics.authorfinder.ui.base.BaseAdapterDelegate
 
 class AuthorDelegate(
     private val listener: (String) -> Unit
-) : BaseAdapterDelegate<Author>() {
+) : BaseAdapterDelegate<AuthorItem>() {
     override val layoutRes: Int = R.layout.item_author
 
     override fun createHolder(view: View): ViewHolder = AuthorViewHolder(view)
 
-    override fun onBindViewHolder(item: Author, holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun onBindViewHolder(item: AuthorItem, holder: ViewHolder, payloads: MutableList<Any>) {
         val viewHolder = holder as AuthorViewHolder
-        viewHolder.bind(item)
+        viewHolder.bind(item as Author)
     }
+
+    override fun isForItem(item: AuthorItem, items: MutableList<AuthorItem>, position: Int): Boolean = item is Author
 
     inner class AuthorViewHolder(convertView: View) : ViewHolder(convertView) {
         fun bind(item: Author) {

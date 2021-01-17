@@ -1,7 +1,7 @@
 package studio.eyesthetics.authorfinder.data.mappers
 
 import studio.eyesthetics.authorfinder.data.models.Author
-import studio.eyesthetics.authorfinder.data.models.AuthorResponse
+import studio.eyesthetics.authorfinder.data.models.responses.AuthorResponse
 
 class AuthorResponseToAuthorMapper : Mapper<AuthorResponse, Author> {
     override fun mapFromEntity(type: AuthorResponse): Author {

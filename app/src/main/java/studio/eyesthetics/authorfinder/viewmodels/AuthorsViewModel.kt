@@ -4,7 +4,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
-import studio.eyesthetics.authorfinder.data.models.Author
+import studio.eyesthetics.authorfinder.data.models.AuthorItem
+import studio.eyesthetics.authorfinder.data.models.Empty
 import studio.eyesthetics.authorfinder.data.repositories.IAuthorRepository
 import studio.eyesthetics.authorfinder.viewmodels.base.BaseViewModel
 import studio.eyesthetics.authorfinder.viewmodels.base.IViewModelFactory
@@ -16,16 +17,16 @@ class AuthorsViewModel(
     private val authorRepository: IAuthorRepository
 ) : BaseViewModel<AuthorsState>(handle, AuthorsState()) {
 
-    private val authors = MutableLiveData<List<Author>>()
+    private val authors = MutableLiveData<List<AuthorItem>>()
 
-    fun observeAuthors(owner: LifecycleOwner, onChange: (List<Author>) -> Unit) {
+    fun observeAuthors(owner: LifecycleOwner, onChange: (List<AuthorItem>) -> Unit) {
         authors.observe(owner, Observer { onChange(it) })
     }
 
     private fun getAuthors(query: String) {
         launchSafety {
             val response = authorRepository.getAuthors(query)
-            authors.value = response
+            authors.value = if (response.isEmpty()) listOf(Empty()) else response
         }
     }
 
