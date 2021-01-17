@@ -2,8 +2,11 @@ package studio.eyesthetics.authorfinder.ui.authors
 
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_authors.*
 import kotlinx.android.synthetic.main.search_view_layout.view.*
@@ -56,6 +59,12 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
             searchView.setQuery(binding.searchQuery, false)
         }
 
+        searchView.findViewById<AutoCompleteTextView>(R.id.search_src_text).apply {
+            val cursorDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.search_cursor)
+            if (cursorDrawable != null)
+                textCursorDrawable = cursorDrawable
+        }
+
         menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 viewModel.handleSearchMode(true)
@@ -95,6 +104,12 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
     }
 
     private fun initAdapter() {
+
+        val decorator = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+        val divider = ContextCompat.getDrawable(requireContext(), R.drawable.divider)
+        if (divider != null)
+            decorator.setDrawable(divider)
+
         authorAdapter.delegatesManager.addDelegate(AuthorDelegate {
             //TODO transition to single author
         })
@@ -102,6 +117,7 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
         rv_authors.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = authorAdapter
+            addItemDecoration(decorator)
         }
     }
 

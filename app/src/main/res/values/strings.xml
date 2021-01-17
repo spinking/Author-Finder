@@ -6,6 +6,8 @@
 
     <!--AuthorsFragment-->
     <string name="authors_search_title">Search</string>
+    <string name="authors_id">Author ID</string>
+    <string name="authors_name">Name</string>
 
     <!--AuthorFramgent-->
     <string name="author_label">Author</string>

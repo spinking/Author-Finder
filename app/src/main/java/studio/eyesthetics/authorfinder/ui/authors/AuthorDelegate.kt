@@ -20,8 +20,10 @@ class AuthorDelegate(
 
     inner class AuthorViewHolder(convertView: View) : ViewHolder(convertView) {
         fun bind(item: Author) {
-            tv_author_id.text = item.authorid
-            tv_author_name.text = item.authordisplay
+            val authorId = "${itemView.context.getString(R.string.authors_id)}: ${item.authorid}"
+            tv_author_id.text = authorId
+            val authorName = "${itemView.context.getString(R.string.authors_name)}: ${item.authordisplay}"
+            tv_author_name.text = authorName
             itemView.setOnClickListener {
                 listener.invoke(item.authorid)
             }
