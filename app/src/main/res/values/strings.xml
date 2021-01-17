@@ -8,8 +8,14 @@
     <string name="authors_search_title">Search</string>
     <string name="authors_id">Author ID</string>
     <string name="authors_name">Name</string>
+    <string name="authors_empty">No search results are found</string>
 
     <!--AuthorFramgent-->
     <string name="author_label">Author</string>
-    <string name="authors_empty">По вашему запросу ничего не найдено</string>
+    <string name="author_titles_label">Titles</string>
+    <string name="author_works_label">Works</string>
+    <string name="author_about_label">About Author</string>
+    <string name="author_contributor">Contributor Type</string>
+    <string name="author_number">ISBN</string>
+    <string name="author_work_id">Work ID</string>
 </resources>

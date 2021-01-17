@@ -2,9 +2,9 @@ package studio.eyesthetics.authorfinder.ui.authors
 
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,11 +13,13 @@ import kotlinx.android.synthetic.main.search_view_layout.view.*
 import studio.eyesthetics.authorfinder.R
 import studio.eyesthetics.authorfinder.app.App
 import studio.eyesthetics.authorfinder.data.models.AuthorItem
+import studio.eyesthetics.authorfinder.ui.author.AuthorFragment
 import studio.eyesthetics.authorfinder.ui.base.*
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsState
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsViewModel
 import studio.eyesthetics.authorfinder.viewmodels.AuthorsViewModelFactory
 import studio.eyesthetics.authorfinder.viewmodels.base.IViewModelState
+import studio.eyesthetics.authorfinder.viewmodels.base.NavigationCommand
 import studio.eyesthetics.authorfinder.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -42,7 +44,7 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
                 MenuItemHolder(
                     getString(R.string.authors_search_title),
                     R.id.action_search,
-                    R.drawable.ic_baseline_search_24,
+                    R.drawable.ic_search,
                     R.layout.search_view_layout
                 )
             )
@@ -59,12 +61,6 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
             searchView.setQuery(binding.searchQuery, false)
         }
 
-        searchView.findViewById<AutoCompleteTextView>(R.id.search_src_text).apply {
-            val cursorDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.search_cursor)
-            if (cursorDrawable != null)
-                textCursorDrawable = cursorDrawable
-        }
-
         menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 viewModel.handleSearchMode(true)
@@ -72,7 +68,7 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                viewModel.handleSearchMode(false) // or true?
+                viewModel.handleSearchMode(false)
                 return true
             }
         })
@@ -112,7 +108,8 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
 
         authorAdapter.delegatesManager.apply {
             addDelegate(AuthorDelegate {
-                //TODO transition to single author
+                val bundle = bundleOf(AuthorFragment.AUTHOR_ID to it)
+                viewModel.navigate(NavigationCommand.To(R.id.authorFragment, bundle))
             })
             addDelegate(EmptyDelegate())
         }

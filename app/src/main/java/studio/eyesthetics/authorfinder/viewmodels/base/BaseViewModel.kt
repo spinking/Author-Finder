@@ -55,6 +55,7 @@ abstract class BaseViewModel<T : IViewModelState>(
     protected fun launchSafety(
         errHandler: ((Throwable) -> Unit)? = null,
         compHandler: ((Throwable?) -> Unit)? = null,
+        isShowLoading: Boolean = true,
         block: suspend CoroutineScope.() -> Unit
     ) {
         val errHand = CoroutineExceptionHandler { _, err ->
@@ -65,13 +66,13 @@ abstract class BaseViewModel<T : IViewModelState>(
                     Notify.ErrorMessage(
                         "Network timeout exception - please try again",
                         "Retry"
-                    ) { launchSafety(errHandler, compHandler, block) })
+                    ) { launchSafety(errHandler, compHandler, isShowLoading, block) })
 
                 is ApiError.InternalServerError -> notify(
                     Notify.ErrorMessage(
                         err.message,
                         "Retry"
-                    ) { launchSafety(errHandler, compHandler, block) })
+                    ) { launchSafety(errHandler, compHandler, isShowLoading, block) })
 
                 is ApiError -> notify(Notify.ErrorMessage(err.message))
                 else -> notify(Notify.ErrorMessage(err.message ?: "Something wrong"))
@@ -79,7 +80,7 @@ abstract class BaseViewModel<T : IViewModelState>(
         }
 
         (viewModelScope + errHand).launch {
-            showLoading()
+            if (isShowLoading) showLoading()
             block()
         }.invokeOnCompletion {
             hideLoading()
@@ -135,8 +136,6 @@ class Event<out E>(private val content: E) {
             content
         }
     }
-
-    fun peekContent(): E = content
 }
 
 class EventObserver<E>(private val onEventUnhandledContent: (E) -> Unit) : Observer<Event<E>> {

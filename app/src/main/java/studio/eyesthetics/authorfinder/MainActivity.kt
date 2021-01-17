@@ -1,15 +1,9 @@
 package studio.eyesthetics.authorfinder
 
-import android.graphics.Rect
-import android.view.MotionEvent
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
-import com.google.android.material.textfield.TextInputEditText
 import studio.eyesthetics.authorfinder.app.App
-import studio.eyesthetics.authorfinder.app.extensions.hideSoftKeyboard
 import studio.eyesthetics.authorfinder.ui.base.BaseActivity
 import studio.eyesthetics.authorfinder.viewmodels.MainViewModel
 import studio.eyesthetics.authorfinder.viewmodels.MainViewModelFactory
@@ -56,25 +50,5 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 builder.show()
             }
         }
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-
-        if (ev.action == MotionEvent.ACTION_DOWN) {
-            val v = currentFocus
-            if (
-                v is SearchView.SearchAutoComplete ||
-                v is EditText ||
-                v is TextInputEditText
-            ) {
-                val outRect = Rect()
-                v.getGlobalVisibleRect(outRect)
-                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
-                    v.clearFocus()
-                    v.hideSoftKeyboard()
-                }
-            }
-        }
-        return super.dispatchTouchEvent(ev)
     }
 }

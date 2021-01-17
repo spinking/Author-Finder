@@ -7,4 +7,4 @@ data class Isbn(
     val contributorType: String,
     @Json(name = "$")
     val contributorId: String
-)
+) : DescriptionItem

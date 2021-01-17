@@ -7,9 +7,7 @@ class AuthorResponseToAuthorMapper : Mapper<AuthorResponse, Author> {
     override fun mapFromEntity(type: AuthorResponse): Author {
         return Author(
             authorid = type.authorid ?: "",
-            authordisplay = type.authordisplay ?: "",
-            titles = type.titles?.isbn ?: emptyList(),
-            works = type.works?.works ?: emptyList(),
+            authordisplay = type.authordisplay ?: ""
         )
     }
 

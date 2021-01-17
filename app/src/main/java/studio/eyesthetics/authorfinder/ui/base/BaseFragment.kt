@@ -81,6 +81,11 @@ abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment()
         super.onPrepareOptionsMenu(menu)
     }
 
+    override fun onStop() {
+        viewModel.saveState()
+        super.onStop()
+    }
+
     open fun renderNotification(notify: Notify) {
         main.renderNotification(notify)
     }
