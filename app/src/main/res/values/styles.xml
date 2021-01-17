@@ -9,10 +9,14 @@
         <item name="colorOnPrimary">@color/colorDark</item>
         <item name="selectableItemBackgroundCollapsed">@color/colorPrimary</item>
         <item name="selectableItemBackgroundExpanded">@color/colorPrimary</item>
+        <item name="autoCompleteTextViewStyle">@style/CursorColor</item>
+    </style>
+
+    <style name="CursorColor" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/search_cursor</item>
     </style>
 
     <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <item name="titleTextColor">?attr/colorOnPrimary</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
         <item name="android:textColorSecondary">?attr/colorOnPrimary</item>
         <item name="android:background">?attr/colorAccent</item>

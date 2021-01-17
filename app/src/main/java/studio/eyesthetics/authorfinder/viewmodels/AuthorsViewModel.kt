@@ -4,6 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
+import kotlinx.coroutines.*
 import studio.eyesthetics.authorfinder.data.models.AuthorItem
 import studio.eyesthetics.authorfinder.data.models.Empty
 import studio.eyesthetics.authorfinder.data.repositories.IAuthorRepository
@@ -18,15 +19,25 @@ class AuthorsViewModel(
 ) : BaseViewModel<AuthorsState>(handle, AuthorsState()) {
 
     private val authors = MutableLiveData<List<AuthorItem>>()
+    var searchJob: Job? = null
 
     fun observeAuthors(owner: LifecycleOwner, onChange: (List<AuthorItem>) -> Unit) {
         authors.observe(owner, Observer { onChange(it) })
     }
 
     private fun getAuthors(query: String) {
-        launchSafety {
-            val response = authorRepository.getAuthors(query)
-            authors.value = if (response.isEmpty()) listOf(Empty()) else response
+        searchJob?.cancel()
+        launchSafety(isShowLoading = false) {
+            searchJob = launch {
+                delay(500)
+                if (query.isEmpty())
+                    authors.value = listOf()
+                else {
+                    showLoading()
+                    val response = authorRepository.getAuthors(query)
+                    authors.value = if (response.isEmpty()) listOf(Empty()) else response
+                }
+            }
         }
     }
 
@@ -35,14 +46,18 @@ class AuthorsViewModel(
         updateState {
             it.copy(searchQuery = query)
         }
-        if (query.isNotEmpty())
-            getAuthors(query)
+        getAuthors(query)
     }
 
     fun handleSearchMode(isSearch: Boolean) {
         updateState {
             it.copy(isSearch = isSearch)
         }
+    }
+
+    override fun onCleared() {
+        searchJob?.cancel()
+        super.onCleared()
     }
 }
 

@@ -21,7 +21,8 @@ class WorkDelegate : BaseAdapterDelegate<DescriptionItem>() {
 
     inner class WorkViewHolder(convertView: View) : ViewHolder(convertView) {
         fun bind(item: Work) {
-            tv_work.text = item.title
+            val workText = "${itemView.context.getString(R.string.author_work_id)}: ${item.title}"
+            tv_work.text = workText
         }
     }
 }

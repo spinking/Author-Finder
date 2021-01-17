@@ -2,7 +2,6 @@ package studio.eyesthetics.authorfinder.ui.authors
 
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -45,7 +44,7 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
                 MenuItemHolder(
                     getString(R.string.authors_search_title),
                     R.id.action_search,
-                    R.drawable.ic_baseline_search_24,
+                    R.drawable.ic_search,
                     R.layout.search_view_layout
                 )
             )
@@ -62,12 +61,6 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
             searchView.setQuery(binding.searchQuery, false)
         }
 
-        searchView.findViewById<AutoCompleteTextView>(R.id.search_src_text).apply {
-            val cursorDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.search_cursor)
-            if (cursorDrawable != null)
-                textCursorDrawable = cursorDrawable
-        }
-
         menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 viewModel.handleSearchMode(true)
@@ -75,7 +68,7 @@ class AuthorsFragment : BaseFragment<AuthorsViewModel>() {
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                viewModel.handleSearchMode(false) // or true?
+                viewModel.handleSearchMode(false)
                 return true
             }
         })

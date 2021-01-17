@@ -17,4 +17,5 @@
     <string name="author_about_label">About Author</string>
     <string name="author_contributor">Contributor Type</string>
     <string name="author_number">ISBN</string>
+    <string name="author_work_id">Work ID</string>
 </resources>

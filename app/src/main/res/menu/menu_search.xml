@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="Поиск"
+        android:icon="@drawable/ic_search"
+        android:title="@string/authors_search_title"
         app:actionLayout="@layout/search_view_layout"
         app:showAsAction="always|collapseActionView" />
 </menu>
